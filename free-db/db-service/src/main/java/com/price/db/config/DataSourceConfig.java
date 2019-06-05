@@ -1,4 +1,4 @@
-package com.price.db;
+package com.price.db.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;

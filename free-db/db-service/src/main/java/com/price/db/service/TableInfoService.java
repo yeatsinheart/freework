@@ -11,6 +11,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import javax.sql.DataSource;
 import java.util.List;
 
@@ -22,28 +23,11 @@ import java.util.List;
  **/
 @Service
 public class TableInfoService {
-    public SqlSessionFactory getDbConnection(String driverName, String url, String userName, String pwd){
-        DataSource dataSource = DataSourceBuilder
-                .create()
-                .driverClassName("com.mysql.cj.jdbc.Driver")
-                .url("jdbc:mysql://localhost:3306/global_3rd_db?useUnicode=true&serverTimezone=UTC&useSSL=false&autoReconnect=true&characterEncoding=utf-8")
-                .username("root")
-                .password("mysql").build();
-        SqlSessionFactoryBean factoryBean = new SqlSessionFactoryBean();
-        factoryBean.setDataSource(dataSource);
-        Configuration configuration = new Configuration();
-        configuration.addMappers("com.price.db.mapper");
-        factoryBean.setConfiguration(configuration);
-        SqlSessionFactory sqlSessionFactory = null;
-        try {
-            sqlSessionFactory = factoryBean.getObject();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return sqlSessionFactory;
-    }
+    @Resource
+    private DataBaseService dataBaseService;
+
     public List<Table> getAllTables(){
-        SqlSessionFactory sqlSessionFactory = getDbConnection("com.mysql.cj.jdbc.Driver",
+        SqlSessionFactory sqlSessionFactory = dataBaseService.getDbConnection("com.mysql.cj.jdbc.Driver",
                 "jdbc:mysql://localhost:3306/global_3rd_db?useUnicode=true&serverTimezone=UTC&useSSL=false&autoReconnect=true&characterEncoding=utf-8",
                 "root","mysql");
         // 使用上面配置的Factory
@@ -58,7 +42,7 @@ public class TableInfoService {
         return tableList;
     }
     public List<Column> getAllColumns(String tableName){
-        SqlSessionFactory sqlSessionFactory = getDbConnection("com.mysql.cj.jdbc.Driver",
+        SqlSessionFactory sqlSessionFactory = dataBaseService.getDbConnection("com.mysql.cj.jdbc.Driver",
                 "jdbc:mysql://localhost:3306/global_3rd_db?useUnicode=true&serverTimezone=UTC&useSSL=false&autoReconnect=true&characterEncoding=utf-8",
                 "root","mysql");
         // 使用上面配置的Factory

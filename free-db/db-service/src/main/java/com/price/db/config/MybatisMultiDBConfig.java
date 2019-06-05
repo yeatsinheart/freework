@@ -1,4 +1,4 @@
-package com.price.db;
+package com.price.db.config;
 
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
