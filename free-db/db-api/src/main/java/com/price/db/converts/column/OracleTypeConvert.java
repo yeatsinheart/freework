@@ -13,39 +13,40 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.price.db.converts;
+package com.price.db.converts.column;
 
 /**
- * SQLServer 字段类型转换
+ * ORACLE 字段类型转换
  *
  * @author hubin
  * @since 2017-01-20
  */
-public class SqlServerTypeConvert implements ITypeConvert {
+public class OracleTypeConvert implements ITypeConvert {
 
     @Override
     public IColumnType processTypeConvert(String fieldType) {
         String t = fieldType.toLowerCase();
-        if (t.contains("char") || t.contains("xml")) {
+        if (t.contains("char")) {
             return DbColumnType.STRING;
-        } else if (t.contains("bigint")) {
-            return DbColumnType.LONG;
-        } else if (t.contains("int")) {
-            return DbColumnType.INTEGER;
-        } else if (t.contains("date") || t.contains("time")) {
+        } else if (t.contains("date") || t.contains("timestamp")) {
             return DbColumnType.LOCAL_DATE_TIME;
-        } else if (t.contains("text")) {
-            return DbColumnType.STRING;
-        } else if (t.contains("bit")) {
-            return DbColumnType.BOOLEAN;
-        } else if (t.contains("decimal") || t.contains("numeric")) {
+        } else if (t.contains("number")) {
+            if (t.matches("number\\(+\\d\\)")) {
+                return DbColumnType.INTEGER;
+            } else if (t.matches("number\\(+\\d{2}+\\)")) {
+                return DbColumnType.LONG;
+            }
             return DbColumnType.DOUBLE;
-        } else if (t.contains("money")) {
-            return DbColumnType.BIG_DECIMAL;
-        } else if (t.contains("binary") || t.contains("image")) {
-            return DbColumnType.BYTE_ARRAY;
-        } else if (t.contains("float") || t.contains("real")) {
+        } else if (t.contains("float")) {
             return DbColumnType.FLOAT;
+        } else if (t.contains("clob")) {
+            return DbColumnType.CLOB;
+        } else if (t.contains("blob")) {
+            return DbColumnType.BLOB;
+        } else if (t.contains("binary")) {
+            return DbColumnType.BYTE_ARRAY;
+        } else if (t.contains("raw")) {
+            return DbColumnType.BYTE_ARRAY;
         }
         return DbColumnType.STRING;
     }

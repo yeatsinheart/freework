@@ -1,9 +1,8 @@
 package com.price.db.dto;
 
-import com.price.db.converts.MySqlTypeConvert;
-import com.price.db.converts.PostgreSqlTypeConvert;
+import com.price.db.converts.column.MySqlTypeConvert;
+import com.price.db.converts.column.PostgreSqlTypeConvert;
 import lombok.Data;
-import lombok.Getter;
 
 import java.io.Serializable;
 

@@ -13,7 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.price.db.converts;
+package com.price.db.converts.column;
 
 /**
  * 表字段类型

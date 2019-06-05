@@ -13,7 +13,9 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.price.db.converts;
+package com.price.db.converts.column;
+
+import com.price.db.converts.column.IColumnType;
 
 /**
  * 数据库字段类型转换
