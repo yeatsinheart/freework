@@ -1,18 +1,12 @@
 package com.price.db.service;
 
-import com.price.db.dto.Column;
-import com.price.db.dto.Table;
-import com.price.db.mapper.ColumnMapper;
-import com.price.db.mapper.TableMapper;
 import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
-import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.stereotype.Service;
 
 import javax.sql.DataSource;
-import java.util.List;
 
 /**
  * @program: freework
@@ -22,13 +16,13 @@ import java.util.List;
  **/
 @Service
 public class DataBaseService {
-    public SqlSessionFactory getDbConnection(String driverName, String url, String userName, String pwd){
+    public SqlSessionFactory getDbConnection(String driverName, String url, String userName, String pwd) {
         DataSource dataSource = DataSourceBuilder
                 .create()
-                .driverClassName("com.mysql.cj.jdbc.Driver")
-                .url("jdbc:mysql://localhost:3306/global_3rd_db?useUnicode=true&serverTimezone=UTC&useSSL=false&autoReconnect=true&characterEncoding=utf-8")
-                .username("root")
-                .password("mysql").build();
+                .driverClassName(driverName)
+                .url(url)
+                .username(userName)
+                .password(pwd).build();
         SqlSessionFactoryBean factoryBean = new SqlSessionFactoryBean();
         factoryBean.setDataSource(dataSource);
         Configuration configuration = new Configuration();
@@ -42,10 +36,12 @@ public class DataBaseService {
         }
         return sqlSessionFactory;
     }
-    public boolean createTable(){
+
+    public boolean createTable() {
         return false;
     }
-    public boolean createTables(){
+
+    public boolean createTables() {
         return false;
     }
 }

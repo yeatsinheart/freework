@@ -1,6 +1,9 @@
 package com.price.db.dto;
 
+import com.price.db.converts.MySqlTypeConvert;
+import com.price.db.converts.PostgreSqlTypeConvert;
 import lombok.Data;
+import lombok.Getter;
 
 import java.io.Serializable;
 
@@ -17,9 +20,15 @@ public class Column implements Serializable {
 
     private String columnName;
     private String dataType;
+    private String javaType;
     private String columnComment;
     private String columnKey;
     private String extra;
 
-
+    public String getJavaType(String driverName) {
+        if (driverName.equals("org.postgresql.Driver")) {
+            return new PostgreSqlTypeConvert().processTypeConvert(this.dataType).getType();
+        }
+        return new MySqlTypeConvert().processTypeConvert(this.dataType).getType();
+    }
 }
